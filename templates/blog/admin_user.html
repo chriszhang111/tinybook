@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %} Blog Admin {% endblock %}
+
+{% block content %}
+
+<div class="row">
+    
+    
+    <div class="col-md-offset-3 col-md-5" style="background-color: #ffffff;
+         box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;">
+        <h3>Blog Admin</h3>
+        
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div id="messages">
+            <ul class="flushes">
+                {% for message in messages %}
+                <li>{{message}}</li>
+                {% endfor %}
+                
+            </ul>
+        </div>
+        
+        {% endif %}
+        {% endwith %}
+        
+       <h4 style = "color:blue"> {{ mess }} </h4>
+       <hr/>
+        
+        {% if list_of_blog %}
+        {% for list in list_of_blog %}
+        <li>{{list}} </li>
+        {% endfor %}
+        {% endif %}
+        
+        
+        
+        <p>
+            Welcome {{ session['username'] }} - <a href="{{url_for('logout')}}">logout </a>
+        </p>
+        
+        
+        
+    </div>
+    
+</div>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %} Blog Admin {% endblock %}
+
+{% block page_content %}
+
+<div class="row">
+    
+    <div class="col-md-offset-1 col-md-5" style="background-color: #ffffff;">
+        
+        <h5>{{username}}'s following list     </h5>
+    </div>
+
+    
+    
+    
+    <div class="col-md-offset-3 col-md-6" style="background-color: #ffffff;
+         box-shadow: inset 3px -0px 0px #555, inset -0px 0px 0px #444;">
+        <h3>{{username | capitalize }}'s Blog</h3>
+        
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div id="messages">
+            <ul class="flushes">
+                {% for message in messages %}
+                <li>{{message}}</li>
+                {% endfor %}
+                
+            </ul>
+        </div>
+        
+        {% endif %}
+        {% endwith %}
+        {% if username == session['username'] %}
+        <div class="user">
+            <h5> Welcome Back {{username}}</h5>
+            
+        </div>
+        {% endif %}
+        
+       <h5 style = "color:blue"> {{ mess }} </h5>
+       <hr/>
+       <div class="post-list">
+        
+        {% if Blog_list %}
+        {% for list in Blog_list.items %}
+        
+        <div class="post-item">
+           
+       <h4><a href="{{url_for('article',username=username,blog=list.title)}}"> {{list.title}} </a></h4>
+            
+       </div>
+        
+        {% endfor %}
+        {% endif %}
+        
+        </div>
+         <div class="post-paginate">              
+        {% if Blog_list.has_prev %} <a href="{{url_for('home',username=username,page=Blog_list.prev_num)}}">prev page </a> {% else %}prev page
+        {% endif %} |
+        {% if Blog_list.has_next %} <a href="{{url_for('home',username=username,page=Blog_list.next_num)}}">next page </a> {% else %}next page
+        {% endif %}
+        
+        
+        
+        </div>
+        
+        
+        
+       
+        
+          
+        
+        
+        
+    </div>
+    
+</div>
+
+{% endblock %}

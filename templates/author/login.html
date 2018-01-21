@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}User Login {% endblock %}
+
+{%  block page_content %}
+
+<div class="row">
+    
+    <div class="col-md-offset-3 col-md-6" style="background-color: #f0f0f0;
+         box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;">
+        
+        <h3>User Login</h3>
+        
+        {% if error %}
+        <div class="error text-danger">{{error}}</div>
+        {% endif %}
+        
+        
+        
+        
+        {% from "__formhelper.html" import render_field %}
+        
+        <form method="POST" action="{{url_for('login')}}" role="form">
+            
+            {{ form.hidden_tag() }}
+            
+            {{render_field(form.username, class='form-control') }}
+            {{ render_field(form.password, class='form-control') }}
+            
+           <div class="btn-group btn-group-lg"> <button type="submit" class="btn btn-primary" >Login</button>
+            </div>
+            
+        </form>
+        <br>
+        <br>
+        
+   
+    </div>
+    
+    
+     
+    
+    
+</div>
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

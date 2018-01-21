@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}  TinyBook {% endblock %}
+{% block page_content %}
+
+
+<div class="row">
+    
+    <div class="col-md-offset-3 col-md-6">
+    {%  if results.count()==0  %}
+    
+    
+    <h3>No results for the keyword</h3>
+    
+    {%  else %}
+    
+    {% for list in results %}
+    
+    <div class="post-item">
+           
+       <h4><a href="{{url_for('article',username=username,blog=list.title)}}"> {{list.title}} </a></h4>
+        <p> {{list.body[:100]|markdown}}...  </p>
+       <div class="text-muted">Posted by <a href="{{url_for('home',username = list.author.username)}}">{{list.author.username}} </a> on {{list.publish_date}}     
+       </div>
+    
+    
+    {% endfor %}
+        
+        
+        
+        
+        
+        
+     {% endif %}   
+    </div>
+        
+        
+        
+        
+</div>
+
+
+
+
+
+
+{% endblock %}

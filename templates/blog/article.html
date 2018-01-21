@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+
+{% block title %}  TinyBook {% endblock %}
+{% block page_content %}
+
+
+<div class="row" >
+    
+    
+        
+        
+    
+    
+    
+    <div class="col-md-offset-3 col-md-6">
+        {% if article.image %}
+        <img src="{{article.imgsrc}}" height="300px" width="600px" class="img-rounded">
+        {% endif %}
+        
+        <h3> {{article.title}}</h3>
+       
+        {% if session.get('username',None)==article.author.username.lower() %}
+        <a href> Edit  </a>
+        
+        
+        
+        <a href="{{url_for('delete',post_id=article.id)}}"> Delete  </a>
+        {% endif %}
+        
+        
+        
+        
+        {{ article.body|markdown }}
+        
+        
+        
+        
+        <div class="text-muted"> Posted by <a href="{{url_for('home',username=article.author.username)}}"><span class="glyphicon glyphicon-user">{{ article.author.username}}</a> </span>on {{article.publish_date}}   </div>
+         {% with messages = get_flashed_messages() %}
+        {% if messages %}
+       
+        {% endif %}
+        {% endwith %}
+        <hr>
+         <div class="comment-list">
+             {% if comments %}
+             {% for cm in comments.items %}
+             <div class="comment-item">     
+            <p> {{ cm.body | markdown}}    </p>
+             <a href="{{url_for('home',username=cm.author.username)}}"> <span class="glyphicon glyphicon-user">{{cm.author.username}}</span> </a> on {{cm.publish_date}} 
+             </div>
+             <hr>
+             {% endfor %}
+             
+             
+        </div>
+        <div class="post-paginate">              
+        {% if comments.has_prev %} <a href="{{url_for('article',username=article.author.username,blog=article.title,page=comments.prev_num)}}">prev page </a> {% else %}prev page
+        {% endif %} |
+        {% if comments.has_next %} <a href="{{url_for('article',username=article.author.username,blog=article.title,page=comments.next_num)}}">next page </a> {% else %}next page
+        {% endif %}
+        {% endif %}
+        
+        
+        
+        </div>
+        
+        
+        
+         {% from "__formhelper.html" import render_field %}
+          <form method="POST" action="{{url_for('article',username=article.author.username,blog=article.title)}}"  role="form">
+            {{ form.hidden_tag()}}
+            
+            
+           
+            
+            
+            
+            
+            {{render_field(form.body, class='form-control')}}  
+          
+           <button type="submit" class="btn btn-default"> Comment</button>
+          
+          </form>      
+
+
+
+
+
+</div>
+</div>
+
+
+
+{% endblock %}

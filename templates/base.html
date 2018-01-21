@@ -1,0 +1,117 @@
+{% extends "bootstrap/base.html" %}
+ 
+
+<html lang = "en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+       
+       
+       
+       
+       
+       
+        
+        
+        <title>{% block title %}TinkBook{% endblock %}</title>
+        
+        <!-- Bootstrap -->
+        <link href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel = "stylesheet">
+    </head>
+    
+   
+       
+        
+        {%  block navbar %}
+                    <div class="navbar navbar-inverse" role="navigation" style="font-family:courier">
+                        <div class="container">
+                            <div class="navbar-collapse collapse">
+                                <ul class="nav navbar-nav navbar-left">
+                                   <li> <a class="navbar-brand" href="{{url_for("index")}}"> 
+                                     <button type="button" class="btn btn-primary"> <span class="glyphicon glyphicon-home"></span> HomePage</button>
+                                    </a></li>
+                                     
+                                    <li> 
+                                    <form class="navbar-form navbar-left" role="search" action="{{url_for('search')}}" method="POST">
+                                    <div class="form-group" style="line-height: 50px">
+                                        <input type="text" class="form-control" name="keyword"  placeholder="Search" style="width:400px" >
+                                    </div>
+                                 
+                                    <button type="Submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>Search</button>
+                                </form> </li>
+               
+                                </ul>
+                                
+                                
+                                
+                    <ul class="nav navbar-nav navbar-right">
+                    {% if session.get('username') %}
+                    <div class="navbar-header" >
+                        <a class="navbar-brand" href="{{url_for('home',username=session['username'])}}" style="FONT-SIZE: 20px; HEIGHT: 10px;line-height :30px;">My page</a>
+                    </div>
+                
+                    <li><a href="{{url_for('write')}}"><button type="button" class="btn btn-primary"> <span class="glyphicon glyphicon-edit"></span>Write Blog</button></a>  </li>
+                    <li><a  href="{{ url_for('logout') }}"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span>Logout</button></a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('login') }}"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span>Login</button></a></li>
+                    <li> <a href="{{url_for('register')}}"> <button type="button" class="btn btn-primary">Register</button> </a>  </li>
+                    {% endif %}
+                    
+            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+        
+        
+    {% block content %}    
+    
+    
+        
+       <div class="container">
+           {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ message }}
+            </div>
+            {% endfor %}
+           {% block page_content %} {% endblock %}
+           
+            
+
+        <div class>
+
+
+        <div class="footer">
+        <hr/>
+        <footer style="background-color:#f0f0f0; clear:both;text-align:center;">
+            &copy; CopyRight 2017 Ruizhe Zhang 
+        </footer>
+
+
+        </div>
+        </div>
+
+{% endblock %}
+
+
+   
+</div>
+   
+        
+
+
+
+       
+        
+        
+        <!-- jQuery for Bootstrap-->
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"> </script>
+        <!-- Bootstrap JS -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <br>
+    
+    
+</html>

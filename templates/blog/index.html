@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %} TinyBook  {% endblock %}
+
+{% block page_content %}
+
+<div class="row" style="font-family:courier">
+    
+    
+    <div class="col-md-offset-3 col-md-6" style="background-color: #ffffff;
+          inset -1px 1px 1px #444;">
+        
+        <h2 style="text-shadow: 5px 5px 5px #C0C0C0"> TinyBook    </h2>
+       
+       <h4><a href="{{url_for('index')}}">  Return to First Page  </a> </h3>
+       <br>
+       <div class="post-list">
+        
+        {% if blogs %}
+        {% for list in blogs.items %}
+        <div class="post-item">
+       <h4><a href="{{url_for('article',username=list.author.username,blog=list.title)}}">{{list.title}} </a></h4>
+       <p> {{list.body[:100]|markdown}}...  </p>
+       <div class="text-muted">Posted by <a href="{{url_for('home',username = list.author.username)}}"><span class="glyphicon glyphicon-user">{{list.author.username}}</span> </a> on {{list.publish_date  }} <span class="glyphicon glyphicon-comment"> {{list.comments.count()}}</span> 
+       <hr>
+       </div>
+       </div>
+        
+        {% endfor %}
+        {% endif %}
+        
+        </div>
+        <div class="post-paginate">              
+        {% if blogs.has_prev %} <a href="{{url_for('index',page=blogs.prev_num)}}"><button type="Submit" class="btn btn-primary"> prev page </button></a> {% else %}<button type="Submit" class="btn btn-danger"> prev page </button>
+        {% endif %}
+        {% if blogs.has_next %} <a href="{{url_for('index',page=blogs.next_num)}}"><button type="Submit" class="btn btn-primary"> next page </button> </a> {% else %}<button type="Submit" class="btn btn-danger"> prev page </button>
+        {% endif %}
+        
+         <hr>    
+        
+        </div>
+        
+        
+    </div>
+    
+</div>
+        
+   
+        
+       
+        
+        
+
+
+{% endblock %}
